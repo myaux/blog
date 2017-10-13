@@ -12,9 +12,8 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('test', function () {
+    return 'test闭包写法';
 });
 //数据库
 //用户表相关操作
@@ -33,7 +32,7 @@ Route::group(['prefix' => 'user'],function (){
             $created_at =date('Y-m-d H:i:s');
             $email = time().'@qq.com';
             $charu = DB::insert("insert into `users` (`name`,`email`,`password`,`created_at`)
-                                            value ('zhai','$email','123456','$created_at')" );
+                                           value ('zhai','$email','123456','$created_at')" );
             return $charu?'插入成功':'插入失败';
         });
         Route::post('update',function (){
@@ -152,7 +151,7 @@ Route::group(['prefix' => 'user'],function (){
 //                    ->where('name', 'zhan')
 //                    ->get();
                 return DB::table('users')
-                    ->where([['name', '=', 'zhan'], ['id', '=', '4']])
+                    ->where([['name', '=', 'zhai'], ['id', '=', '4']])
                     ->get();
             });
             Route::post('orWhere', function () {
