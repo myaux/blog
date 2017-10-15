@@ -3,17 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Blog extends Model
 {
-    protected $dates = ['published_at'];
+    use SoftDeletes;
+    //...其他一些设置
+    protected $dates = ['delete_at'];
 
-    public function setTitleAttribute($value)
-    {
-        $this->attributes['title'] = $value;
-
-        if (! $this->exists) {
-            $this->attributes['slug'] = str_slug($value);
-        }
-    }
 }

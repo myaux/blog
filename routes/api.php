@@ -219,11 +219,11 @@ Route::group(['prefix' => 'blog-model'], function () {
         $blog ->save();
     });
     // 根据主键查询
-    Route::get('index/{id}', function ($id) {
+    Route::get('show/{id}', function ($id) {
         return response()->json(\App\Blog::find($id));
     });
     // 列表查询
-    Route::get('show', function () {
+    Route::get('index', function () {
         return response()->json(\App\Blog::get());
     });
     // 条件查询, 查询构造器和以前的DB对象一样用
