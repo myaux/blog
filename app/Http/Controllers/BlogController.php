@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Blog;
+use Illuminate\Http\Request;
 class BlogController extends Controller
 {
     public function info()
@@ -61,5 +63,24 @@ class BlogController extends Controller
     public function has(\Request $request)
     {
         return $request ->has('');
+    }
+
+
+
+    public function create(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required|string|min:2|max:50',
+            'content' => 'required|string|min:6'
+        ]);
+        try {
+            $user = Blog::create([
+                'title' => $request->title,
+                'content' => $request-> content,
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json(['code' => 100, 'msg' => '发布失败']);
+        }
+        return response()->json(['code' => 0, 'msg' => '发布成功']);
     }
 }
