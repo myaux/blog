@@ -44,14 +44,14 @@ class BlogController extends Controller
         return $blog;
     }
 
-    //  todo 修改博客
+    //   修改博客
     public function update(Request $request)
     {
-        // todo 1 : id值没有经过表单处理
         //表单验证
         $this->validate($request, [
             'title' => 'required_without_all:content|string|min:2|max:50',
-            'content' => 'required_without_all:title|string|min:6'
+            'content' => 'required_without_all:title|string|min:6',
+            'id' =>'required|int',
         ]);
 
         log::info('all',[$request->all()]);
@@ -60,18 +60,22 @@ class BlogController extends Controller
 
         //  取出$request中的blog_id
         $id = $request->input('id');
-        log::info('id',[$request->input('id')]);
+        log::info('id',[$id]);
         //对user模型中的属性进行更新（等同于数据库更新）
-//        $blog = $request->blog();
         $blog = Blog::find($id);
-        // todo 2 : 这里不调试一下blog模型取到了没有吗
-//        $blog =$request->blog;
+        // 调试一下blog模型是否取到
+        log::info('blog',[$blog]);
         //对$request中通过验证的数据进行遍历更新
         try {
-            // todo 3 : 这里request使用foreach获取到的是所有的传入值吗，那传入的id怎么办？
+            //  这里request使用foreach获取到的是所有的传入值，通过only限制需要取到的值
             foreach ($request->only(['title', 'content']) as $key => $value) {
                 $blog->$key = $value;
             }
+            // todo 如果title和content中只有一个值存在，如何处理
+            //在进行更新前需要去掉空值，只对有值的参数进行更新
+//           if ($request->has('title')|$request->has('content')){
+//               $blog->$request->input(['title','content']);
+//           } ;
             //保存修改到数据库中
             $blog->save();
 

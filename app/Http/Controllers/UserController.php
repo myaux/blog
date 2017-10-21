@@ -71,7 +71,7 @@ class UserController extends Controller
         ]);
         log::info('all',[$request->all()]);
 
-        $input = $request->all();
+        $input = $request->only('email','password','name');
         if ($request->has('password')) {
             $input['password'] = password_hash($input['password'], PASSWORD_DEFAULT);
         }
