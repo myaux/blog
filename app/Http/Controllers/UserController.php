@@ -10,6 +10,7 @@ class UserController extends Controller
 {
     public function register(Request $request)
     {
+        log::info('请求1',[$_POST, $request->all()]);
         $this->validate($request, [
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|max:20',
