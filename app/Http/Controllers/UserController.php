@@ -48,7 +48,11 @@ class UserController extends Controller
     public function show(Request $request)
     {
         $user = $request->user();
-        return $user;
+        return response()->json([
+            'data' => $user,
+            'msg' => 'succsess',
+            'code' => 0,
+        ]);
     }
 
     public function see(Request $request)
@@ -57,7 +61,11 @@ class UserController extends Controller
             'id' => 'required|integer|exists:users',
         ]);
         $user = User::where('id', $request->id)->first();
-        return $user;
+        return response()->json([
+            'data' => $user,
+            'msg' => 'succsess',
+            'code' => 0,
+        ]);
     }
 
     // todo 修改用户信息

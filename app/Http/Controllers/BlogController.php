@@ -34,14 +34,22 @@ class BlogController extends Controller
     public function show(Request $request)
     {
         $blog = Blog::where('id', $request->id)->first();
-        return $blog;
+        return response()->json([
+            'data' => $blog,
+            'msg' => 'succsess',
+            'code' => 0,
+        ]);
     }
 
     //获取博客列表
     public function index(Request $request)
     {
         $blog = Blog::get();
-        return $blog;
+        return response()->json([
+            'data' => $blog,
+            'msg' => 'succsess',
+            'code' => 0,
+        ]);
     }
 
     //   修改博客

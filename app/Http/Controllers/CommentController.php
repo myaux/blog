@@ -39,7 +39,11 @@ class CommentController extends Controller
             'blog_id' => 'required|int'
         ]);
         $comment = Comment::where('blog_id',$request->input('blog_id', '默认值'))->get();
-        return $comment;
+        return response()->json([
+            'data' => $comment,
+            'msg' => 'succsess',
+            'code' => 0,
+        ]);
     }
 
     //修改评论
