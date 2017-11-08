@@ -10,7 +10,6 @@ class UserController extends Controller
 {
     public function register(Request $request)
     {
-        log::info('请求1',[$_POST, $request->all()]);
         $this->validate($request, [
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|max:20',
@@ -23,8 +22,12 @@ class UserController extends Controller
                 'name' => $request->name,
             ]);
         } catch (\Exception $exception) {
-//            return response()->json(['code' => 100, 'msg' => '注册失败']);
-            return $this->error_response('注册失败');
+//            return $this->error_response('注册失败','100','$exception');
+            return response()->json([
+                'data' => $this,
+                'msg' => '注册失败',
+                'code' => 100,
+            ]);
         }
 //        return response()->json(['code' => 0, 'msg' => '注册成功']);
         return $this->array_response('注册成功');
@@ -63,7 +66,7 @@ class UserController extends Controller
         $user = User::where('id', $request->id)->first();
         return response()->json([
             'data' => $user,
-            'msg' => 'succsess',
+            'msg' => 'succsZess',
             'code' => 0,
         ]);
     }
